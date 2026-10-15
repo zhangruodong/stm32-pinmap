@@ -1,0 +1,22 @@
+{
+  "_说明": "复制成 pinmap.config.json 放在你自己的仓库里，并加进 .gitignore。这里放的是『判定规则』，不是工程数据 —— 工程数据不该进 git。",
+
+  "_skip": "扫描时要跳过的目录名（正则片段，会拼成一条正则）",
+  "skip": ["\\.git", "node_modules", "FWLib", "StdPeriph", "CMSIS", "RTE",
+           "DebugConfig", "OBJ", "Listings", "Library"],
+
+  "_levels": "引脚功能名 -> 重要程度。自上而下匹配，命中即停。改这里，不改代码。",
+  "levels": [
+    ["🔴 会动/停不下来",   "(MOTOR|PWM|ENABLE|BRAKE|BLDC|PHASE|STEP|DIR|IN[1-4]\\b|OUT[1-4]\\b)"],
+    ["🟠 失控/通信断",     "(CAN|UART|USART|_TX\\b|_RX\\b|WDG|NRST|PS2|USB)"],
+    ["🟡 读数错/功能失效", "(SENSOR|ADC|KEY|BUTTON|IMU|MPU|ICM|GYRO|SPI|IIC|I2C|SCL|SDA|ENC|HALL|CURRENT|TEMP)"],
+    ["🔵 只是不方便",      "(LED|BEEP|BUZZER|OLED|LCD|LIGHT|RGB|STRIP)"]
+  ],
+  "defaultLevel": "⚪ 未分类",
+
+  "_versionVar": "判定『运行在哪版硬件上』的那个变量名，报告里的『运行时分发点』靠它找。给的是正则片段（大小写不敏感，两边自动加 \\b），默认命中 Hardware_Ver / HW_Ver / BoardVer / PCBRev 这类命名。对不上就填自己的变量名。",
+  "versionVar": "(?:Hardware|Board|HW|PCB)_?(?:Ver|Version|Rev)",
+
+  "_ignore": "额外当成『不算冲突』的引脚名（正则，匹配宏名）",
+  "ignore": []
+}
